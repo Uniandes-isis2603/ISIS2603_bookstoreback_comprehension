@@ -126,6 +126,38 @@ La arquitectura de la aplicación sigue un modelo **en capas**, lo que permite u
      - Se mapean desde y hacia entidades utilizando herramientas como `ModelMapper`.
 
 ---
+## 12. ¿Cómo me puedo comunicar con esta aplicación?: ¿API? ¿Mecanismo de comunicación?
+
+La comunicación con esta aplicación se realiza a través de una **API RESTful**. El mecanismo de comunicación es HTTP(S), donde los clientes (aplicaciones web, móviles o herramientas como Postman) envían solicitudes HTTP a los endpoints expuestos por los controladores de Spring Boot.
+
+### **Mecanismo de Comunicación**
+- **Protocolo:** HTTP/HTTPS
+- **Formato de datos:** JSON (para solicitudes y respuestas)
+- **Endpoints:** Definidos en los controladores (`@RestController`), organizados por recursos (libros, autores, premios, etc.)
+
+### **Ejemplo de Endpoints (BookController)**
+
+```java
+@RestController
+@RequestMapping("/books")
+public class BookController {
+
+    @GetMapping
+    public List<BookDetailDTO> findAll() { ... } // Obtener todos los libros
+
+    @GetMapping("/{id}")
+    public BookDetailDTO findOne(@PathVariable Long id) { ... } // Obtener libro por ID
+
+    @PostMapping
+    public BookDTO create(@RequestBody BookDTO bookDTO) { ... } // Crear un libro
+
+    @PutMapping("/{id}")
+    public BookDTO update(@PathVariable Long id, @RequestBody BookDTO bookDTO) { ... } // Actualizar libro
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) { ... } // Eliminar libro
+}
+```
 
 ### **Relación entre las Capas**
 - Cada capa interactúa únicamente con la capa inmediatamente inferior o superior, siguiendo el principio de separación de responsabilidades.
